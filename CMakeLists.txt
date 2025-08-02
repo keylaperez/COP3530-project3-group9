@@ -7,7 +7,8 @@ include_directories(src)
 
 add_executable(COP3530_Project3
         main.cpp
-        movieHashMap.h
         movieHashMap.cpp
+        movieHashMap.h
+
 
 )
