@@ -9,4 +9,6 @@ add_executable(COP3530_Project3
         main.cpp
         movieHashMap.h
         movieHashMap.cpp
+        movieTrie.h
+        movieTrie.cpp
 )
