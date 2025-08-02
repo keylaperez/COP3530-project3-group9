@@ -8,6 +8,8 @@
 #include <iostream>
 #include <unordered_map>
 #include <vector>
+#include <string>
+#include <iostream>
 
 using namespace std;
 
@@ -17,12 +19,12 @@ private:
     unordered_map<string,vector<string>> movies;
 
 public:
-    void insertMovie(string name, string year, string genre, string rating);
+    void insertMovie(string name, int year, string genre, int rating);
     void titleSearch(string name);
-    void yearFilter(string year);
+    void yearFilter(int year);
     void genreFilter(string genre);
     void ratingByGenre(string genre);
-
+    vector<string> splitGenre(string genre);
 };
 
 
