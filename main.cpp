@@ -6,6 +6,6 @@
 using namespace std;
 
 int main() {
-  cout << "" << endl;
+  cout << "movie recommender" << endl;
   return 0;
 }
