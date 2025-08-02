@@ -3,7 +3,6 @@
 //
 #include <iostream>
 #include <limits>
-#include <vector>
 #include "movieHashMap.h"
 
 using namespace std;
@@ -16,6 +15,7 @@ int getChoice() {
         cin.ignore(numeric_limits<streamsize>::max(), '\n');
         return -1;
     }
+    cin.ignore(numeric_limits<streamsize>::max(), '\n');
     return choice;
 }
 
@@ -32,6 +32,8 @@ void mainMenu() {
   }
 
 int main() {
+movieHashMap movieHashMap;
+
     int choice;
     do {
         mainMenu();
@@ -42,29 +44,36 @@ int main() {
                 cout << "Enter Movie Title: ";
                 string title;
                 cin >> title;
+                movieHashMap.titleSearch(title);
                 break;
             }
             case 2: {
                 cout << "Enter Release Year: ";
                 int year;
                 cin >> year;
+                cin.ignore(numeric_limits<streamsize>::max(), '\n');
+                movieHashMap.yearFilter(year);
                 break;
             }
             case 3: {
                 cout << "Enter Movie Genre: ";
                 string genre;
                 cin >> genre;
+                movieHashMap.genreFilter(genre);
                 break;
             }
             case 4: {
                 cout << "Enter Rating by Genre: ";
-                double rating;
-                cin >> rating;
+                string genre;
+                cin >> genre;
+                movieHashMap.ratingByGenre(genre);
                 break;
             }
             case 5: {
                 cout <<"Good Bye!";
                 break;
+            default:
+                cout << "Invalid Choice!";
             }
         }
         return 0;
