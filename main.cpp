@@ -25,7 +25,8 @@ void mainMenu() {
           " 2. Release Year \n"
           " 3. Movie Genre\n"
           " 4. Rating by Genre \n"
-          " 5. EXIT \n";
+          " 5. EXIT \n"
+          "\n Type your answer here: \n";
   }
 
 int main() {
