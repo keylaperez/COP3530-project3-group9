@@ -13,8 +13,10 @@ int getChoice() {
     int choice;
     if (!(cin >> choice)) {
         cin.clear();
-        choice = -1;
+        cin.ignore(numeric_limits<streamsize>::max(), '\n');
+        return -1;
     }
+    return choice;
 }
 
 //the main menu the user will see
@@ -68,3 +70,4 @@ int main() {
         return 0;
     } while (choice != 5);
 }
+
