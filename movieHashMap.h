@@ -1,0 +1,14 @@
+//
+// Created by Winni Weng on 8/2/25.
+//
+
+#ifndef COP3530_PROJECT3_GROUP9_MOVIEHASHMAP_H
+#define COP3530_PROJECT3_GROUP9_MOVIEHASHMAP_H
+
+
+class movieHashMap {
+
+};
+
+
+#endif //COP3530_PROJECT3_GROUP9_MOVIEHASHMAP_H
