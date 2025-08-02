@@ -5,7 +5,7 @@ set(CMAKE_CXX_STANDARD 14)
 
 include_directories(src)
 
-add_executable(Main
+add_executable(COP3530-project3
         src/main.cpp
         src/movieHashMap.cpp
 )
