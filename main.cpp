@@ -17,6 +17,7 @@ int getChoice() {
     }
 }
 
+//the main menu the user will see
 void mainMenu() {
   cout << "\n === Welcome to the Movie Recommender! === \n"
           "\n Please select an option from the following menu: \n"
