@@ -33,6 +33,38 @@ int main() {
     do {
         mainMenu();
         choice = getChoice();
+
+        switch (choice) {
+            case 1: {
+                cout << "Enter Movie Title: ";
+                string title;
+                cin >> title;
+                break;
+            }
+            case 2: {
+                cout << "Enter Release Year: ";
+                int year;
+                cin >> year;
+                break;
+            }
+            case 3: {
+                cout << "Enter Movie Genre: ";
+                string genre;
+                cin >> genre;
+                break;
+            }
+            case 4: {
+                cout << "Enter Rating by Genre: ";
+                double rating;
+                cin >> rating;
+                break;
+            }
+            case 5: {
+                cout <<"Good Bye!";
+                break;
+            }
+        } while (choice != 5);
+
+        return 0;
     }
-  return 0;
 }
