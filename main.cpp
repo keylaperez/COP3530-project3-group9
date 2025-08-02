@@ -63,8 +63,7 @@ int main() {
                 cout <<"Good Bye!";
                 break;
             }
-        } while (choice != 5);
-
+        }
         return 0;
-    }
+    } while (choice != 5);
 }
