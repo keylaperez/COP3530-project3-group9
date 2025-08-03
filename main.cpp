@@ -71,7 +71,7 @@ movieHashMap movieHashMap;
                 cout << "Enter Rating by Genre: ";
                 string genre;
                 cin >> genre;
-                movieHashMap.ratingByGenre(genre);
+                movieHashMap.ratingByGenre();
                 break;
             }
             case 5: {
