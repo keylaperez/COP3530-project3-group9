@@ -3,7 +3,6 @@
 //
 #include <iostream>
 #include <limits>
-#include <vector>
 #include "movieHashMap.h"
 
 using namespace std;
@@ -13,8 +12,11 @@ int getChoice() {
     int choice;
     if (!(cin >> choice)) {
         cin.clear();
-        choice = -1;
+        cin.ignore(numeric_limits<streamsize>::max(), '\n');
+        return -1;
     }
+    cin.ignore(numeric_limits<streamsize>::max(), '\n');
+    return choice;
 }
 
 //the main menu the user will see
@@ -30,6 +32,13 @@ void mainMenu() {
   }
 
 int main() {
+movieHashMap movieHashMap;
+
+    movieHashMap.insertMovie("Inception", 2010, "Sci-fi",      9);
+    movieHashMap.insertMovie("Titanic", 1997, "Drama-Romance",  8);
+    movieHashMap.insertMovie("Parastite", 2019, "Thriller-Drama",8);
+
+
     int choice;
     do {
         mainMenu();
@@ -40,31 +49,39 @@ int main() {
                 cout << "Enter Movie Title: ";
                 string title;
                 cin >> title;
+                movieHashMap.titleSearch(title);
                 break;
             }
             case 2: {
                 cout << "Enter Release Year: ";
                 int year;
                 cin >> year;
+                cin.ignore(numeric_limits<streamsize>::max(), '\n');
+                movieHashMap.yearFilter(year);
                 break;
             }
             case 3: {
                 cout << "Enter Movie Genre: ";
                 string genre;
                 cin >> genre;
+                movieHashMap.genreFilter(genre);
                 break;
             }
             case 4: {
                 cout << "Enter Rating by Genre: ";
-                double rating;
-                cin >> rating;
+                string genre;
+                cin >> genre;
+                movieHashMap.ratingByGenre(genre);
                 break;
             }
             case 5: {
                 cout <<"Good Bye!";
                 break;
+            default:
+                cout << "Invalid Choice!";
             }
         }
         return 0;
     } while (choice != 5);
 }
+
