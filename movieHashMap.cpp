@@ -49,14 +49,35 @@ void movieHashMap::insertMovie(std::string name, int year, std::string genre, in
 }
 
 void movieHashMap::ratingByGenre(string genre) { //user selects a genre and system prints out top movie for it
-    unordered_map<string, vector<string>> topMovies;
+    vector<pair<string, vector<string>>> topMovies;
+    int highestRating = 0;
 
+    for (const auto& pair : movies) { //looping through movies
+        string title = pair.first;
+        vector<string> info = pair.second;
+        int currentRating = stoi(info[1]);
+        string currentGenre = info[2];
 
-    for (const auto& pair : movies) {
-        string currentGenre = pair.second[2];
-        if (currentGenre.find(genre) == true) {
+        if (currentGenre.find(genre) != std::string::npos) { //if find string fins the genre
+            if (topMovies.empty() || currentRating > highestRating) { //checks if top movies is empty of if new one found is better rating
+                topMovies.clear();
+                topMovies.push_back({title, info});
+                highestRating = currentRating;
+
+            } else if (currentRating == highestRating) { //if same rating then we add
+                topMovies.push_back({title, info});
+            }
 
         }
+    }
+
+    for (int i = 0; i < topMovies.size(); i++) { //printing each genre
+
+        cout << "Genre: " << genre << endl;
+        cout << "Top movie: " << topMovies[i].first;
+        cout << " | Year: " << topMovies[i].second[0];
+        cout << " | Rating: " << topMovies[i].second[1];
+        cout << " | Genre(s): " << topMovies[i].second[2] << endl;
     }
 
 }
