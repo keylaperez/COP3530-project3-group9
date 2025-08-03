@@ -23,7 +23,7 @@ public:
     void titleSearch(string name);
     void yearFilter(int year);
     void genreFilter(string genre);
-    void ratingByGenre();
+    void ratingByGenre(string genre);
     vector<string> splitGenre(string genre);
 };
 

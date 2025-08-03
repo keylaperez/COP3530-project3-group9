@@ -48,35 +48,48 @@ void movieHashMap::insertMovie(std::string name, int year, std::string genre, in
 
 }
 
-void movieHashMap::ratingByGenre() { //prints out every genre and its top movie
-    unordered_map<string, vector<string>> bestGenres;
+void movieHashMap::ratingByGenre(string genre) { //user selects a genre and system prints out top movie for it
+    unordered_map<string, vector<string>> topMovies;
 
-    for (const auto& pair : movies) { //loops through each movie and puts the top in bestGenres map
-        string title = pair.first;
-        vector<string> info = pair.second;
 
-        vector<string> genreList = splitGenre(info[2]);
+    for (const auto& pair : movies) {
+        string currentGenre = pair.second[2];
+        if (currentGenre.find(genre) == true) {
 
-        for (const string& g : genreList) {
-            if (bestGenres.find(g) == bestGenres.end() || stoi(info[1]) > stoi(bestGenres[g][1])) { //checking if its in or is bigger than a genre already in
-                bestGenres[g] = info;
-
-            }
         }
     }
 
-    for (const auto& pair : bestGenres) { //printing each genre
-        string genre = pair.first;
-        vector<string> info = pair.second;
-
-        cout << "Genre: " << genre << endl;
-        cout << "Top movie: " << info[0];
-        cout << " | Year: " << info[1];
-        cout << " | Rating: " << info[2];
-        cout << " | Genre(s): " << info[3] << endl;
-    }
-
 }
+
+    //below is for if we wanted to print out every genre and its top movie again. Currently not using it for the option
+//    unordered_map<string, vector<string>> bestGenres;
+//
+//    for (const auto& pair : movies) { //loops through each movie and puts the top in bestGenres map
+//        string title = pair.first;
+//        vector<string> info = pair.second;
+//
+//        vector<string> genreList = splitGenre(info[2]);
+//
+//        for (const string& g : genreList) {
+//            if (bestGenres.find(g) == bestGenres.end() || stoi(info[1]) > stoi(bestGenres[g][1])) { //checking if its in or is bigger than a genre already in
+//                bestGenres[g] = info;
+//
+//            }
+//        }
+//    }
+//
+//    for (const auto& pair : bestGenres) { //printing each genre
+//        string genre = pair.first;
+//        vector<string> info = pair.second;
+//
+//        cout << "Genre: " << genre << endl;
+//        cout << "Top movie: " << info[0];
+//        cout << " | Year: " << info[1];
+//        cout << " | Rating: " << info[2];
+//        cout << " | Genre(s): " << info[3] << endl;
+//    }
+//
+//}
 
 void movieHashMap::titleSearch(std::string name) {
 
