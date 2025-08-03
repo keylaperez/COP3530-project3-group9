@@ -28,6 +28,21 @@ vector<string> movieHashMap::splitGenre(std::string genreStr) { //splitting the 
 
 void movieHashMap::genreFilter(std::string genre) {
 
+    for (const auto& pair : movies) { //looping through movies
+        string title = pair.first;
+        vector<string> info = pair.second;
+
+        string currentGenre = info[2];
+
+        if (currentGenre.find(genre) != std::string::npos) { //if genre is found then prints movie out
+            cout << "Title: " << title;
+            cout << " | Year: " << info[0];
+            cout << " | Rating: " << info[1];
+            cout << " | Genre(s): " << info[2] << endl;
+
+        }
+    }
+
 
 }
 
@@ -37,7 +52,7 @@ void movieHashMap::insertMovie(std::string name, int year, std::string genre, in
     movies[name].push_back(to_string(rating));
     movies[name].push_back(genre);
 
-    //below is just in case if we need to splitGenre again
+    //below is just in case if we need to splitGenre again while inserting
 
 //    vector<string> genreList = splitGenre(genre);
 //
@@ -58,7 +73,7 @@ void movieHashMap::ratingByGenre(string genre) { //user selects a genre and syst
         int currentRating = stoi(info[1]);
         string currentGenre = info[2];
 
-        if (currentGenre.find(genre) != std::string::npos) { //if find string fins the genre
+        if (currentGenre.find(genre) != std::string::npos) { //if find string finds the genre
             if (topMovies.empty() || currentRating > highestRating) { //checks if top movies is empty of if new one found is better rating
                 topMovies.clear();
                 topMovies.push_back({title, info});
@@ -122,11 +137,11 @@ void movieHashMap::yearFilter(int year) { //filter by year
         string title = pair.first;
         vector<string> info = pair.second;
 
-        if (year == stoi(info[0])) { //if year matches then prints it out
-            cout << "Title: " << title << endl;
-            cout << "Year: " << info[0] << endl;
-            cout << "Rating: " << info[1] << endl;
-            cout << "Genre: " << info[2] << endl;
+        if (year == stoi(info[0])) { //if year matches then prints movie out
+        cout << "Title: " << title;
+        cout << " | Year: " << info[0];
+        cout << " | Rating: " << info[1];
+        cout << " | Genre(s): " << info[2] << endl;
 
         }
     }
