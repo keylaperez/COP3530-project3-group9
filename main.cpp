@@ -74,14 +74,15 @@ movieHashMap movieHashMap;
                 movieHashMap.ratingByGenre(genre);
                 break;
             }
-            case 5: {
+            case 5:
                 cout <<"Good Bye!";
                 break;
-            default:
-                cout << "Invalid Choice!";
+                default:
+                    cout << "Invalid Choice!";
+                break;
             }
-        }
+        } while (choice != 5);
         return 0;
-    } while (choice != 5);
-}
+    }
+
 
