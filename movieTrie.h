@@ -3,13 +3,9 @@
 
 #include <string>
 #include <iostream>
+#include <vector>
 
 using namespace std;
-
-/*
-Trie trie;
-trie.parseCSV("movies.csv");
-*/
 
 struct Movie {
     // Where data on each movie is stored
@@ -23,13 +19,18 @@ struct TrieNode {
     // node for the trie structure
     TrieNode *children[128]; // each node that has children for each ascii character
     bool end; // for end of title
-    Movie *movie; // holds a movie object
+    vector<Movie *> movies; // vector of movie objects
 
     TrieNode(); // constructor
+    ~TrieNode(); // destructor
 };
 
 class MovieTrie {
-    TrieNode *root; // each trie has a root node
+    TrieNode *rootTitle; // title trie has a root node
+    TrieNode *rootGenre; // genre trie has a root node
+    TrieNode *rootYear; // year trie has a root node
+    TrieNode *rootRating; // rating trie has a root node
+
     Movie *movieList;
     int movieCount; // how many movies
 
@@ -67,7 +68,6 @@ public:
 
     void printMovie(const Movie *m);
 };
-
 
 
 #endif

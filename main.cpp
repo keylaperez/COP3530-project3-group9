@@ -5,6 +5,7 @@
 #include <fstream>
 #include "movieHashMap.h"
 #include "movieTrie.h"
+#include <ctime>
 
 using namespace std;
 
@@ -54,10 +55,16 @@ MovieTrie myTrie;
                 cout << "Enter Movie Title: ";
                 string title;
                 cin >> title;
+
                 cout << "Hash Map Results: " << endl;
                 movieHashMap.titleSearch(title);
+
+                clock_t start = clock();
                 cout << "Trie Results: " << endl;
                 myTrie.printTitles(title);
+                clock_t end = clock();
+                double elapsed = double(end - start) / CLOCKS_PER_SEC;
+                cout << "Search took: " << elapsed << " seconds.\n";
                 break;
             }
             case 2: {
@@ -65,10 +72,19 @@ MovieTrie myTrie;
                 int year;
                 cin >> year;
                 cin.ignore(numeric_limits<streamsize>::max(), '\n');
+                clock_t start = clock();
                 cout << "Hash Map Results: " << endl;
                 movieHashMap.yearFilter(year);
+                clock_t end = clock();
+                double elapsed = double(end - start) / CLOCKS_PER_SEC;
+                cout << "Search took: " << elapsed << " seconds.\n";
+
+                clock_t startt = clock();
                 cout << "Trie Results: " << endl;
                 myTrie.printYear(year);
+                clock_t endt = clock();
+                double elapsedt = double(endt - startt) / CLOCKS_PER_SEC;
+                cout << "Search took: " << elapsedt << " seconds.\n";
                 break;
             }
             case 3: {

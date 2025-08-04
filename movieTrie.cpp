@@ -4,66 +4,102 @@
 
 TrieNode::TrieNode() {
     end = false; // initially false
-    movie = nullptr; // no movies yet
     for (int i = 0; i < 128; ++i) {
         children[i] = nullptr; // nothing in the children
     }
 }
 
+TrieNode::~TrieNode() {
+    for (int i = 0; i < 128; ++i)
+        delete children[i];
+}
+
 
 MovieTrie::MovieTrie() {
-    root = new TrieNode(); // new node for root
+    rootTitle = new TrieNode(); // new root for each trie
+    rootGenre = new TrieNode();
+    rootYear = new TrieNode();
+    rootRating = new TrieNode();
     movieCount = 0; // count initially 0
     movieList = new Movie[8000];
     //parseCSV("movies.csv");
 }
 
-
-static void deleteNode(TrieNode *node) {
-    if (!node) return;
-    for (int i = 0; i < 128; ++i) {
-        deleteNode(node->children[i]);
-    }
-    delete node;
-}
-
-
 MovieTrie::~MovieTrie() {
-    deleteNode(root);
+    delete rootTitle;
+    delete rootGenre;
+    delete rootYear;
+    delete rootRating;
     delete[] movieList;
 }
 
 
 void MovieTrie::insertMovie(const char *title, int year, const char *genre, float rating) {
-    if (movieCount >= 800000) {
-        // 800,000 max movie count
+    if (movieCount >= 8000) {
+        // 8,000 max movie count
         return; // unsuccessful
     }
 
 
     Movie &m = movieList[movieCount]; // reference array of movies
-    strncpy(m.title, title, 100); //https://cplusplus.com/reference/cstring/strncpy/
-    m.title[100 - 1] = '\0';
-    strncpy(m.genre, genre, 50);
-    m.genre[50 - 1] = '\0';
+    strncpy(m.title, title, sizeof(m.title)); //https://cplusplus.com/reference/cstring/strncpy/
+    m.title[sizeof(m.title) - 1] = '\0';
+    strncpy(m.genre, genre, sizeof(m.genre));
+    m.genre[sizeof(m.genre) - 1] = '\0';
     m.year = year;
     m.rating = rating;
+    Movie *mPtr = &m;
 
 
-    // each character in the title is added to the trie
-    TrieNode *node = root;
+    // each character in the title is added to the title trie
+    TrieNode *node = rootTitle;
     for (int i = 0; title[i] != '\0'; ++i) {
         unsigned char ch = static_cast<unsigned char>(title[i]);
         if (!node->children[ch]) {
             node->children[ch] = new TrieNode();
         }
         node = node->children[ch];
+        node->movies.push_back(mPtr);
     }
-
 
     node->end = true; // this node has reached the end of the movie title
     node->movie = &m; // now this node is assigned with the movie object
+    // Genre trie
+    node = rootGenre;
+    for (int i = 0; genre[i]; ++i) {
+        unsigned char c = static_cast<unsigned char>(genre[i]);
+        if (!node->children[c])
+            node->children[c] = new TrieNode();
+        node = node->children[c];
+        node->movies.push_back(mPtr);
+    }
+    node->end = true;
 
+    // Year trie
+    char yearStr[5];
+    snprintf(yearStr, sizeof(yearStr), "%d", year);
+    node = rootYear;
+    for (int i = 0; yearStr[i]; ++i) {
+        unsigned char c = static_cast<unsigned char>(yearStr[i]);
+        if (!node->children[c])
+            node->children[c] = new TrieNode();
+        node = node->children[c];
+        node->movies.push_back(mPtr);
+    }
+    node->end = true;
+
+    // Rating trie
+    char ratingStr[10];
+    snprintf(ratingStr, sizeof(ratingStr), "%.1f", rating);
+    node = rootRating;
+    for (int i = 0; ratingStr[i]; ++i) {
+        unsigned char c = static_cast<unsigned char>(ratingStr[i]);
+        if (!node->children[c])
+            node->children[c] = new TrieNode();
+        node = node->children[c];
+        node->movies.push_back(mPtr);
+    }
+    node->end = true;
 
     movieCount++; // amt of movies updated
     //return; // successful!
@@ -86,9 +122,9 @@ Movie *MovieTrie::titleSearch(const char *title) {
         }
         node = node->children[ch];
     }
-    if (node->end) {
-        // this is at the end of a title
-        return node->movie; // return movie
+    if (node->end && !node->movies.empty()) {
+        // this is at the end of a title and there is a movie there
+        return node->movies[node->movies.size() - 1]; // return movie
     }
     return nullptr;
 }
@@ -100,8 +136,11 @@ void MovieTrie::collectAllFromNode(TrieNode *node, Movie *results[], int &count,
     }
 
 
-    if (node->end && count < maxResults) {
-        results[count++] = node->movie; // reached the end of a movie title so add to results array
+    for (Movie *m: node->movies) {
+        if (count >= maxResults) {
+            break;
+        }
+        results[count++] = m;
     }
 
 
@@ -114,24 +153,36 @@ void MovieTrie::collectAllFromNode(TrieNode *node, Movie *results[], int &count,
 
 
 int MovieTrie::genreSearch(const char *genre, Movie *results[], int maxResults) {
+    TrieNode *node = rootGenre;
+    for (int i = 0; genre[i]; ++i) {
+        unsigned char c = static_cast<unsigned char>(genre[i]);
+        if (!node->children[c]) return 0;
+        node = node->children[c];
+    }
+
     int count = 0;
-    for (int i = 0; i < movieCount && count < maxResults; ++i) {
-        // goes thru movies
-        if (strcmp(movieList[i].genre, genre) == 0) {
-            // https://cplusplus.com/reference/cstring/strcmp/
-            results[count++] = &movieList[i]; // traverse movie list for genre
-        }
+    for (Movie *m: node->movies) {
+        if (count >= maxResults) break;
+        results[count++] = m;
     }
     return count;
 }
 
 
 int MovieTrie::yearSearch(int year, Movie *results[], int maxResults) {
+    char yearStr[5];
+    snprintf(yearStr, sizeof(yearStr), "%d", year);
+    TrieNode *node = rootYear;
+    for (int i = 0; yearStr[i]; ++i) {
+        unsigned char c = static_cast<unsigned char>(yearStr[i]);
+        if (!node->children[c]) return 0;
+        node = node->children[c];
+    }
+
     int count = 0;
-    for (int i = 0; i < movieCount && count < maxResults; ++i) {
-        if (movieList[i].year == year) {
-            results[count++] = &movieList[i]; // traverse movie list for year
-        }
+    for (Movie *m: node->movies) {
+        if (count >= maxResults) break;
+        results[count++] = m;
     }
     return count;
 }
@@ -140,9 +191,8 @@ int MovieTrie::yearSearch(int year, Movie *results[], int maxResults) {
 int MovieTrie::ratingsSearch(float minRating, float maxRating, Movie *results[], int maxResults) {
     int count = 0;
     for (int i = 0; i < movieCount && count < maxResults; ++i) {
-        if (movieList[i].rating >= minRating && movieList[i].rating <= maxRating) {
-            results[count++] = &movieList[i]; // traverse movie list for rating
-        }
+        if (movieList[i].rating >= minRating && movieList[i].rating <= maxRating)
+            results[count++] = &movieList[i];
     }
     return count;
 }
