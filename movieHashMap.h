@@ -10,6 +10,8 @@
 #include <vector>
 #include <string>
 #include <iostream>
+#include <fstream>
+#include <sstream>
 
 using namespace std;
 
@@ -25,6 +27,7 @@ public:
     void genreFilter(string genre);
     void ratingByGenre(string genre);
     vector<string> splitGenre(string genre);
+    void parsingDataSet(string name);
 };
 
 

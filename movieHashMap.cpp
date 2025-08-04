@@ -26,7 +26,15 @@ vector<string> movieHashMap::splitGenre(std::string genreStr) { //splitting the 
     return genres;
 }
 
+std::string toLower(const std::string& str) {
+    std::string lower = str;
+    std::transform(lower.begin(), lower.end(), lower.begin(), ::tolower);
+    return lower;
+}
+
 void movieHashMap::genreFilter(std::string genre) {
+
+    int count = 0;
 
     for (const auto& pair : movies) { //looping through movies
         string title = pair.first;
@@ -39,6 +47,11 @@ void movieHashMap::genreFilter(std::string genre) {
             cout << " | Year: " << info[0];
             cout << " | Rating: " << info[1];
             cout << " | Genre(s): " << info[2] << endl;
+
+            count++;
+            if (count == 10) {
+                break;
+            }
 
         }
     }
@@ -73,7 +86,7 @@ void movieHashMap::ratingByGenre(string genre) { //user selects a genre and syst
         int currentRating = stoi(info[1]);
         string currentGenre = info[2];
 
-        if (currentGenre.find(genre) != std::string::npos) { //if find string finds the genre
+        if (toLower(currentGenre).find(toLower(genre)) != std::string::npos) { //if find string finds the genre
             if (topMovies.empty() || currentRating > highestRating) { //checks if top movies is empty of if new one found is better rating
                 topMovies.clear();
                 topMovies.push_back({title, info});
@@ -129,10 +142,87 @@ void movieHashMap::ratingByGenre(string genre) { //user selects a genre and syst
 
 void movieHashMap::titleSearch(std::string name) {
 
+    int count = 0;
+
+    for (const auto& pair : movies) { //looping through movies
+        string title = pair.first;
+        vector<string> info = pair.second;
+
+        string currentTitle = title;
+
+        if (toLower(currentTitle).find(toLower(name)) != std::string::npos) { //if genre is found then prints movie out
+            cout << "Title: " << title;
+            cout << " | Year: " << info[0];
+            cout << " | Rating: " << info[1];
+            cout << " | Genre(s): " << info[2] << endl;
+
+            count++;
+            if (count == 10) {
+                break;
+            }
+
+        }
+    }
+
 
 }
 
+void movieHashMap::parsingDataSet(std::string filename) {
+    ifstream file(filename);
+    if (!file.is_open()) {
+        cerr << "Error opening file: " << filename << "\n";
+        return;
+    }
+
+    string line;
+    getline(file, line); // skip header
+
+    while (getline(file, line)) {
+        stringstream ss(line);
+        string title, genreStr, yearStr, ratingStr;
+
+        if (!getline(ss, title, ',')) continue;
+        if (!getline(ss, genreStr, ',')) continue;
+
+        // Handle quoted genre field like "['Action', 'Adventure']"
+        if (!genreStr.empty() && genreStr[0] == '"') {
+            string temp;
+            while (genreStr.back() != '"' && getline(ss, temp, ',')) {
+                genreStr += "," + temp;
+            }
+            if (!genreStr.empty() && genreStr.front() == '"') genreStr.erase(0, 1);
+            if (!genreStr.empty() && genreStr.back() == '"') genreStr.pop_back();
+        }
+
+        if (!getline(ss, yearStr, ',')) continue;
+        if (!getline(ss, ratingStr, ',')) continue;
+
+        try {
+            int year = stoi(yearStr);
+            float rating = stof(ratingStr);
+
+            // Clean up genre string
+            genreStr.erase(remove(genreStr.begin(), genreStr.end(), '['), genreStr.end());
+            genreStr.erase(remove(genreStr.begin(), genreStr.end(), ']'), genreStr.end());
+            genreStr.erase(remove(genreStr.begin(), genreStr.end(), '\''), genreStr.end());
+            size_t pos = 0;
+            while ((pos = genreStr.find(", ")) != string::npos) {
+                genreStr.replace(pos, 2, ",");
+            }
+
+            insertMovie(title, year, genreStr, static_cast<int>(rating));
+        } catch (...) {
+            continue; // skip bad rows silently
+        }
+    }
+
+    file.close();
+    cout << "File parsed successfully.\n";
+}
+
 void movieHashMap::yearFilter(int year) { //filter by year
+
+    int count = 0;
 
     for (const auto& pair : movies) { //looping through movies
         string title = pair.first;
@@ -143,6 +233,11 @@ void movieHashMap::yearFilter(int year) { //filter by year
         cout << " | Year: " << info[0];
         cout << " | Rating: " << info[1];
         cout << " | Genre(s): " << info[2] << endl;
+
+            count++;
+            if (count == 10) {
+                break;
+            }
 
         }
     }
