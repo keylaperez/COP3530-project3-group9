@@ -11,7 +11,7 @@ TrieNode::TrieNode() {
 
 TrieNode::~TrieNode() {
     for (int i = 0; i < 128; ++i)
-        delete children[i];
+        delete children[i]; // recursively deletes children
 }
 
 
