@@ -65,6 +65,7 @@ void MovieTrie::insertMovie(const char *title, int year, const char *genre, floa
     node->end = true; // this node has reached the end of the movie title
 
     // Genre trie
+    /*
     node = rootGenre;
     for (int i = 0; genre[i]; ++i) {
         unsigned char c = static_cast<unsigned char>(genre[i]);
@@ -74,6 +75,7 @@ void MovieTrie::insertMovie(const char *title, int year, const char *genre, floa
         node->movies.push_back(mPtr);
     }
     node->end = true;
+    */
 
     // Year trie
     char yearStr[5];
@@ -148,6 +150,27 @@ void MovieTrie::parseCSV(const std::string& filename) {
             }
 
             insertMovie(title.c_str(), year, genreStr.c_str(), rating);
+
+            Movie *mPtr = &movieList[movieCount - 1];
+
+            stringstream genreSS(genreStr);
+            string individualGenre;
+            while (getline(genreSS, individualGenre, ',')) {
+                individualGenre.erase(remove_if(individualGenre.begin(), individualGenre.end(), ::isspace), individualGenre.end());
+
+                if (!individualGenre.empty()) {
+                    TrieNode *node = rootGenre;
+                    for (char c : individualGenre) {
+                        unsigned char uc = static_cast<unsigned char>(c);
+                        if (!node->children[uc])
+                            node->children[uc] = new TrieNode();
+                        node = node->children[uc];
+                        node->movies.push_back(mPtr);
+                    }
+                    node->end = true;
+                }
+            }
+
         } catch (...) {
             // skip invalid row silently
             continue;

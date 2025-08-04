@@ -19,24 +19,24 @@ struct Movie {
 
 struct TrieNode {
     // node for the trie structure
-    TrieNode *children[128]; // each node that has children for each ascii character
+    TrieNode* children[128]; // each node that has children for each ascii character
     bool end; // for end of title
-    vector<Movie *> movies; // vector of movie objects
+    vector<Movie*> movies; // vector of movie objects
 
     TrieNode(); // constructor
     ~TrieNode(); // destructor
 };
 
 class MovieTrie {
-    TrieNode *rootTitle; // title trie has a root node
-    TrieNode *rootGenre; // genre trie has a root node
-    TrieNode *rootYear; // year trie has a root node
-    TrieNode *rootRating; // rating trie has a root node
+    TrieNode* rootTitle; // title trie has a root node
+    TrieNode* rootGenre; // genre trie has a root node
+    TrieNode* rootYear; // year trie has a root node
+    TrieNode* rootRating; // rating trie has a root node
 
-    Movie *movieList;
+    Movie* movieList;
     int movieCount; // how many movies
 
-    void collectAllFromNode(TrieNode *node, Movie *results[], int &count, int maxResults);
+    void collectAllFromNode(TrieNode* node, Movie* results[], int &count, int maxResults);
 
     // collect data from the movies
 
@@ -52,7 +52,6 @@ public:
 
     // returns movie object based on title searched
     Movie *titleSearch(const char *title);
-
 
     int genreSearch(const char *genre, Movie *results[], int maxResults);
 
