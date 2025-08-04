@@ -135,7 +135,7 @@ void movieHashMap::titleSearch(std::string name) {
 
         string currentTitle = title;
 
-        if (currentTitle.find(name) != std::string::npos) { //if title is found then prints movie out
+        if (currentTitle.find(name) != std::string::npos) { //if genre is found then prints movie out
             cout << "Title: " << title;
             cout << " | Year: " << info[0];
             cout << " | Rating: " << info[1];
@@ -160,5 +160,6 @@ void movieHashMap::yearFilter(int year) { //filter by year
 
         }
     }
+
 
 }
