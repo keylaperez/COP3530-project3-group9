@@ -5,9 +5,6 @@
 #include "movieTrie.h"
 #include <cstring>
 
-#include "movieTrie.h"
-#include <cstring>
-
 TrieNode::TrieNode() {
     end = false;
     movie = nullptr;
@@ -21,26 +18,26 @@ MovieTrie::MovieTrie() {
     movieCount = 0;
 }
 
-static void freeNode(TrieNode* node) {
+static void deleteNode(TrieNode* node) {
     if (!node) return;
     for (int i = 0; i < 128; ++i) {
-        freeNode(node->children[i]);
+        deleteNode(node->children[i]);
     }
     delete node;
 }
 
 MovieTrie::~MovieTrie() {
-    freeNode(root);
+    deleteNode(root);
 }
 
 bool MovieTrie::insertMovie(const char* title, const char* genre, int year, float rating) {
-    if (movieCount >= MAX_MOVIES) return false;
+    if (movieCount >= 800000) return false;
 
     Movie& m = movieList[movieCount];
-    strncpy(m.title, title, MAX_TITLE_LEN);
-    m.title[MAX_TITLE_LEN - 1] = '\0';
-    strncpy(m.genre, genre, MAX_GENRE_LEN);
-    m.genre[MAX_GENRE_LEN - 1] = '\0';
+    strncpy(m.title, title, 100);
+    m.title[100 - 1] = '\0';
+    strncpy(m.genre, genre, 50);
+    m.genre[50 - 1] = '\0';
     m.year = year;
     m.rating = rating;
 
@@ -79,7 +76,7 @@ void MovieTrie::collectAllFromNode(TrieNode* node, Movie* results[], int& count,
         results[count++] = node->movie;
     }
 
-    for (int i = 0; i < CHAR_SIZE; ++i) {
+    for (int i = 0; i < 128; ++i) {
         if (node->children[i]) {
             collectAllFromNode(node->children[i], results, count, maxResults);
         }

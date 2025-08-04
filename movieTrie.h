@@ -34,13 +34,8 @@ struct TrieNode {
 
 class MovieTrie {
 private:
-    static const int MAX_TITLE_LEN = 100;
-    static const int MAX_GENRE_LEN = 50;
-    static const int MAX_MOVIES = 800000;
-    static const int CHAR_SIZE = 128;
-
     TrieNode* root;
-    Movie movieList[MAX_MOVIES];
+    Movie movieList[800000];
     int movieCount;
 
     void collectAllFromNode(TrieNode* node, Movie* results[], int& count, int maxResults);
