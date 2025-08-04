@@ -4,13 +4,12 @@
 
 #include "movieHashMap.h"
 
-
-int movieHashMap::hash(const string& key) const { //hashing to return where the movie should be
+int movieHashMap::hash(const string& key) const { //hashing to return where the movie should go
     int h = 0;
     for (char c : key) {
-        h = h*31 + c;
+        h = h*31 + c; //multiplying current hash by 31 and then adding the value of ASCII of character
     }
-    return (h % capacity + capacity) % capacity;
+    return (h % capacity + capacity) % capacity; //making sure its non negative
 }
 
 movieHashMap::movieHashMap(int initialC) : size(0), capacity(initialC) { //constructor for our structure initalizing it
@@ -18,17 +17,17 @@ movieHashMap::movieHashMap(int initialC) : size(0), capacity(initialC) { //const
 }
 
 void movieHashMap::insert(const string& key, const vector<string>& value) { //inserting core
-    int index = hash(key);
-    movies[index].push_back({key, value});
+    int index = hash(key); //hashing
+    movies[index].push_back({key, value}); //putting it in the vector
     size++;
 
     if (size > capacity * 0.75) { //if capacity is at 75% then we gotta resize
         capacity *= 2;
         vector<vector<pair<string, vector<string>>>> newBuckets(capacity); //putting in new bucket
-        for (auto& bucket : movies) {
-            for (auto& p : bucket) {
-                int newIndex = hash(p.first);
-                newBuckets[newIndex].push_back(p);
+        for (auto& bucket : movies) { //looping movie keys
+            for (auto& p : bucket) { //looping bucket info
+                int newIndex = hash(p.first); //hashing title
+                newBuckets[newIndex].push_back(p); //putting movie info in bucket value of the key
             }
         }
         movies = move(newBuckets); //changing buckets
@@ -36,8 +35,8 @@ void movieHashMap::insert(const string& key, const vector<string>& value) { //in
 }
 
 void movieHashMap::insertMovie(string name, int year, string genre, int rating) { //helperInsert from outside with the variables
-    vector<string> info = {to_string(year), to_string(rating), genre};
-    insert(name, info);
+    vector<string> info = {to_string(year), to_string(rating), genre}; //hash map insertion core needs all strings
+    insert(name, info); //insertion core for hash map
 }
 
 std::string toLower(const std::string& str) { //for capitialization stuff so that way we can search uppercase or lowercase
@@ -50,8 +49,8 @@ void movieHashMap::genreFilter(std::string genre) { //genre filter, looping thro
 
     int count = 0;
 
-    for (const auto& bucket : movies) {
-        for (const auto& pair : bucket) {
+    for (const auto& bucket : movies) { //looping through the movies
+        for (const auto& pair : bucket) { //looking through the info bucket
             const string& title = pair.first;
             const vector<string>& info = pair.second;
 
@@ -78,8 +77,8 @@ void movieHashMap::ratingByRange(float minRating, float maxRating) { //between t
 
     vector<pair<string, vector<string>>> matchingMovies; // loop of matching movies
 
-    for (const auto& bucket : movies) {
-        for (const auto& pair : bucket) {
+    for (const auto& bucket : movies) { //looping movies (key)
+        for (const auto& pair : bucket) { //looping buckets of info
             const string& title = pair.first;
             const vector<string>& info = pair.second;
 
@@ -95,6 +94,7 @@ void movieHashMap::ratingByRange(float minRating, float maxRating) { //between t
         cout << "No movies found in the rating range " << minRating << " to " << maxRating << "." << endl;
         return;
     }
+
     int count = 0;
 
     for (const auto& movie : matchingMovies) { //looping through the first ten movies that match the rating
@@ -113,8 +113,8 @@ void movieHashMap::ratingByRange(float minRating, float maxRating) { //between t
 void movieHashMap::titleSearch(std::string name) { //searching for title with specified string
 
     int count = 0;
-    for (const auto& bucket : movies) {
-        for (const auto &pair: bucket) {
+    for (const auto& bucket : movies) { //looping through the keys
+        for (const auto &pair: bucket) { //looping the bucket infos
             const string &title = pair.first;
             const vector<string> &info = pair.second;
 
@@ -200,8 +200,8 @@ void movieHashMap::yearFilter(int year) { //filter by year
 
     int count = 0;
 
-    for (const auto &bucket: movies) {
-        for (const auto &pair: bucket) {
+    for (const auto &bucket: movies) { //looping the movie keys
+        for (const auto &pair: bucket) { //looping the info buckets
             const string &title = pair.first;
             const vector<string> &info = pair.second;
 
