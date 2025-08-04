@@ -40,9 +40,10 @@ MovieTrie myTrie;
     movieHashMap.insertMovie("Inception", 2010, "Sci-fi",      9);
     movieHashMap.insertMovie("Titanic", 1997, "Drama-Romance",  8);
     movieHashMap.insertMovie("Parastite", 2019, "Thriller-Drama",8);
-    myTrie.insertMovie("Inception", 2010, "Sci-fi",      9);
-    myTrie.insertMovie("Titanic", 1997, "Drama-Romance",  8);
-    myTrie.insertMovie("Parastite", 2019, "Thriller-Drama",8);
+    //myTrie.insertMovie("Inception", 2010, "Sci-fi",      9);
+    //myTrie.insertMovie("Titanic", 1997, "Drama-Romance",  8);
+    //myTrie.insertMovie("Parastite", 2019, "Thriller-Drama",8);
+    myTrie.parseCSV("25k IMDb movie Dataset (edited) - 25k IMDb movie Dataset.csv");
 
 
     int choice;

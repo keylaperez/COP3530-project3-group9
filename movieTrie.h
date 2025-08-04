@@ -3,6 +3,8 @@
 
 #include <string>
 #include <iostream>
+#include <sstream>
+#include <fstream>
 #include <vector>
 
 using namespace std;
@@ -46,7 +48,7 @@ public:
     // initialize this, it is not called unless testinf
     void insertMovie(const char *title, int year, const char *genre, float rating);
 
-    void parseCVS(string &file);
+    void parseCSV(const string& filename);
 
     // returns movie object based on title searched
     Movie *titleSearch(const char *title);
