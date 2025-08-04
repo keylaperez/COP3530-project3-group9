@@ -146,7 +146,7 @@ int MovieTrie::ratingsSearch(float minRating, float maxRating, Movie *results[],
 }
 
 
-void printTitles(MovieTrie *trie, const string &title) {
+void MovieTrie::printTitles(MovieTrie *trie, const string &title) {
     // print movies with title
     Movie *result = trie->titleSearch(title.c_str());
     if (result) {
@@ -157,7 +157,7 @@ void printTitles(MovieTrie *trie, const string &title) {
 }
 
 
-void printGenre(MovieTrie *trie, const string &genre) {
+void MovieTrie::printGenre(MovieTrie *trie, const string &genre) {
     // print movies with genre
     Movie *results[100];
     int found = trie->genreSearch(genre.c_str(), results, 100);
@@ -168,7 +168,7 @@ void printGenre(MovieTrie *trie, const string &genre) {
 }
 
 
-void printYear(MovieTrie *trie, int year) {
+void MovieTrie::printYear(MovieTrie *trie, int year) {
     // print movies with year
     Movie *results[100];
     int found = trie->yearSearch(year, results, 100);
@@ -179,7 +179,7 @@ void printYear(MovieTrie *trie, int year) {
 }
 
 
-void printRatings(MovieTrie *trie, float lowerRate, float upperRate) {
+void MovieTrie::printRatings(MovieTrie *trie, float lowerRate, float upperRate) {
     // print movies with ratings
     Movie *results[100];
     int found = trie->ratingsSearch(lowerRate, upperRate, results, 100);
@@ -190,7 +190,7 @@ void printRatings(MovieTrie *trie, float lowerRate, float upperRate) {
 }
 
 
-void printMovie(const Movie *m) {
+void MovieTrie::printMovie(const Movie *m) {
     cout << "Title: " << m->title
             << ", Genre: " << m->genre
             << ", Year: " << m->year

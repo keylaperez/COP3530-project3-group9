@@ -56,18 +56,18 @@ public:
     int yearSearch(int year, Movie *results[], int maxResults);
 
     int ratingsSearch(float minRating, float maxRating, Movie *results[], int maxResults);
+
+    void printTitles(MovieTrie *trie, const string &title);
+
+    void printGenre(MovieTrie *trie, const string &genre);
+
+    void printYear(MovieTrie *trie, int year);
+
+    void printRatings(MovieTrie *trie, float lowerRate, float upperRate);
+
+    void printMovie(const Movie *m);
 };
 
-
-void printTitles(MovieTrie *trie, const string &title);
-
-void printGenre(MovieTrie *trie, const string &genre);
-
-void printYear(MovieTrie *trie, int year);
-
-void printRatings(MovieTrie *trie, float lowerRate, float upperRate);
-
-void printMovie(const Movie *m);
 
 
 #endif
