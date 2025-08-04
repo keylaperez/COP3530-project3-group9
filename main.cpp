@@ -91,10 +91,20 @@ MovieTrie myTrie;
                 cout << "Enter Movie Genre: ";
                 string genre;
                 cin >> genre;
+
+                clock_t start = clock();
                 cout << "Hash Map Results: " << endl;
                 movieHashMap.genreFilter(genre);
+                clock_t end = clock();
+                double elapsed = double(end - start) / CLOCKS_PER_SEC;
+                cout << "Search took: " << elapsed << " seconds.\n";
+
+                clock_t startt = clock();
                 cout << "Trie Results: " << endl;
                 myTrie.printGenre(genre);
+                clock_t endt = clock();
+                double elapsedt = double(endt - startt) / CLOCKS_PER_SEC;
+                cout << "Search took: " << elapsedt << " seconds.\n";
                 break;
             }
             case 5:

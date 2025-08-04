@@ -63,7 +63,7 @@ void MovieTrie::insertMovie(const char *title, int year, const char *genre, floa
     }
 
     node->end = true; // this node has reached the end of the movie title
-    node->movie = &m; // now this node is assigned with the movie object
+
     // Genre trie
     node = rootGenre;
     for (int i = 0; genre[i]; ++i) {
@@ -113,7 +113,7 @@ void MovieTrie::parseCVS(string &file) {
 
 Movie *MovieTrie::titleSearch(const char *title) {
     // given character array of title
-    TrieNode *node = root;
+    TrieNode *node = rootTitle;
     for (int i = 0; title[i] != '\0'; ++i) {
         // traverse trie using each letter and each node
         unsigned char ch = static_cast<unsigned char>(title[i]);
