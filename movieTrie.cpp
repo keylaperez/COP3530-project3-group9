@@ -114,49 +114,46 @@ void MovieTrie::parseCSV(const std::string& filename) {
     }
 
     string line;
-    getline(file, line);
+    getline(file, line); // skip header
 
     while (getline(file, line)) {
         stringstream ss(line);
         string title, genreStr, yearStr, ratingStr;
 
         if (!getline(ss, title, ',')) continue;
-
         if (!getline(ss, genreStr, ',')) continue;
+
         if (!genreStr.empty() && genreStr[0] == '"') {
-            std::string temp;
+            string temp;
             while (genreStr.back() != '"' && getline(ss, temp, ',')) {
                 genreStr += "," + temp;
             }
-            // Remove quotes around genre
-            if (!genreStr.empty() && genreStr.front() == '"') genreStr.erase(0,1);
+            if (!genreStr.empty() && genreStr.front() == '"') genreStr.erase(0, 1);
             if (!genreStr.empty() && genreStr.back() == '"') genreStr.pop_back();
         }
 
         if (!getline(ss, yearStr, ',')) continue;
         if (!getline(ss, ratingStr, ',')) continue;
 
-        int year = stoi(yearStr);
-        float rating = stof(ratingStr);
+        try {
+            int year = stoi(yearStr);
+            float rating = stof(ratingStr);
 
-        // Parse genre to simple comma-separated string without quotes or brackets
-        std::string genres = genreStr;
-        // Remove square brackets and single quotes
-        genres.erase(remove(genres.begin(), genres.end(), '['), genres.end());
-        genres.erase(remove(genres.begin(), genres.end(), ']'), genres.end());
-        genres.erase(remove(genres.begin(), genres.end(), '\''), genres.end());
+            genreStr.erase(remove(genreStr.begin(), genreStr.end(), '['), genreStr.end());
+            genreStr.erase(remove(genreStr.begin(), genreStr.end(), ']'), genreStr.end());
+            genreStr.erase(remove(genreStr.begin(), genreStr.end(), '\''), genreStr.end());
+            size_t pos = 0;
+            while ((pos = genreStr.find(", ", pos)) != string::npos) {
+                genreStr.replace(pos, 2, ",");
+            }
 
-        // Replace spaces after commas (", ") with just commas
-        std::string::size_type pos = 0;
-        while ((pos = genres.find(", ", pos)) != std::string::npos) {
-            genres.replace(pos, 2, ",");
+            insertMovie(title.c_str(), year, genreStr.c_str(), rating);
+        } catch (...) {
+            // skip invalid row silently
+            continue;
         }
-        std::string parsedGenre = genres;
-        //if (year == 2022 && rating == 1.0) {
-            //cout<< title.c_str() << year<< parsedGenre.c_str()<< rating<< endl;
-        //}
-        insertMovie(title.c_str(), year, parsedGenre.c_str(), rating);
     }
+
     cout << "FILE WORKED" << endl;
     file.close();
 }

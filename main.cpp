@@ -34,6 +34,12 @@ void mainMenu() {
   }
 
 int main() {
+    ifstream test("moviesDataset.csv");
+    if (!test.is_open()) {
+        cerr << "Couldn't find the file.\n";
+    } else {
+        cout << "File loaded successfully.\n";
+    }
 movieHashMap movieHashMap;
 MovieTrie myTrie;
 
@@ -43,7 +49,7 @@ MovieTrie myTrie;
     //myTrie.insertMovie("Inception", 2010, "Sci-fi",      9);
     //myTrie.insertMovie("Titanic", 1997, "Drama-Romance",  8);
     //myTrie.insertMovie("Parastite", 2019, "Thriller-Drama",8);
-    myTrie.parseCSV("25k IMDb movie Dataset (edited) - 25k IMDb movie Dataset.csv");
+    myTrie.parseCSV("moviesDataset.csv");
 
 
     int choice;
@@ -55,7 +61,7 @@ MovieTrie myTrie;
             case 1: {
                 cout << "Enter Movie Title: ";
                 string title;
-                cin >> title;
+                getline(cin, title);
 
                 cout << "Hash Map Results: " << endl;
                 movieHashMap.titleSearch(title);
@@ -91,7 +97,7 @@ MovieTrie myTrie;
             case 3: {
                 cout << "Enter Movie Genre: ";
                 string genre;
-                cin >> genre;
+                getline(cin, genre);
 
                 clock_t start = clock();
                 cout << "Hash Map Results: " << endl;
