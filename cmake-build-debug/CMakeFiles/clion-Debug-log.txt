@@ -1,6 +1,6 @@
-/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/bin/cmake -DCMAKE_BUILD_TYPE=Debug -G "Unix Makefiles" -S /Users/sydneyfung/UF_Summer_Semester_2025/COP3530/code/project_3 -B /Users/sydneyfung/UF_Summer_Semester_2025/COP3530/code/project_3/cmake-build-debug
--- The C compiler identification is AppleClang 15.0.0.15000309
--- The CXX compiler identification is AppleClang 15.0.0.15000309
+/Applications/CLion.app/Contents/bin/cmake/mac/x64/bin/cmake -DCMAKE_BUILD_TYPE=Debug -G "Unix Makefiles" -S /Users/w1nn1weng/CLionProjects/COP3530-project3-group9 -B /Users/w1nn1weng/CLionProjects/COP3530-project3-group9/cmake-build-debug
+-- The C compiler identification is AppleClang 17.0.0.17000013
+-- The CXX compiler identification is AppleClang 17.0.0.17000013
 -- Detecting C compiler ABI info
 -- Detecting C compiler ABI info - done
 -- Check for working C compiler: /Library/Developer/CommandLineTools/usr/bin/cc - skipped
@@ -11,6 +11,6 @@
 -- Check for working CXX compiler: /Library/Developer/CommandLineTools/usr/bin/c++ - skipped
 -- Detecting CXX compile features
 -- Detecting CXX compile features - done
--- Configuring done (1.8s)
+-- Configuring done (2.7s)
 -- Generating done (0.0s)
--- Build files have been written to: /Users/sydneyfung/UF_Summer_Semester_2025/COP3530/code/project_3/cmake-build-debug
+-- Build files have been written to: /Users/w1nn1weng/CLionProjects/COP3530-project3-group9/cmake-build-debug

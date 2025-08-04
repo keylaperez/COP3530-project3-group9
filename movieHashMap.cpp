@@ -129,6 +129,21 @@ void movieHashMap::ratingByGenre(string genre) { //user selects a genre and syst
 
 void movieHashMap::titleSearch(std::string name) {
 
+    for (const auto& pair : movies) { //looping through movies
+        string title = pair.first;
+        vector<string> info = pair.second;
+
+        string currentTitle = title;
+
+        if (currentTitle.find(name) != std::string::npos) { //if genre is found then prints movie out
+            cout << "Title: " << title;
+            cout << " | Year: " << info[0];
+            cout << " | Rating: " << info[1];
+            cout << " | Genre(s): " << info[2] << endl;
+
+        }
+    }
+
 }
 
 void movieHashMap::yearFilter(int year) { //filter by year
