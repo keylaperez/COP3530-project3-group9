@@ -128,7 +128,8 @@ void movieHashMap::ratingByGenre(string genre) { //user selects a genre and syst
 //}
 
 void movieHashMap::titleSearch(std::string name) {
-//Giving is problems
+
+
 }
 
 void movieHashMap::yearFilter(int year) { //filter by year
@@ -145,6 +146,5 @@ void movieHashMap::yearFilter(int year) { //filter by year
 
         }
     }
-
 
 }
