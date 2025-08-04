@@ -71,7 +71,7 @@ movieHashMap movieHashMap;
                 break;
             }
             case 5:
-                cout <<"Good Bye!";
+                cout <<"Good Bye!!";
                 break;
                 default:
                     cout << "Invalid Choice!";
