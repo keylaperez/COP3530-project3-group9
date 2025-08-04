@@ -91,7 +91,7 @@ void movieHashMap::ratingByRange(float minRating, float maxRating) { //between t
         }
     }
 
-    if (matchingMovies.empty()) {
+    if (matchingMovies.empty()) { // if matching movies loop is empty then print out
         cout << "No movies found in the rating range " << minRating << " to " << maxRating << "." << endl;
         return;
     }
@@ -110,7 +110,7 @@ void movieHashMap::ratingByRange(float minRating, float maxRating) { //between t
     }
 }
 
-void movieHashMap::titleSearch(std::string name) {
+void movieHashMap::titleSearch(std::string name) { //searching for title with specified string
 
     int count = 0;
     for (const auto& bucket : movies) {
@@ -137,7 +137,7 @@ void movieHashMap::titleSearch(std::string name) {
 
 }
 
-void movieHashMap::parsingDataSet(std::string name) {
+void movieHashMap::parsingDataSet(std::string name) { //for parsing in the movie set
     ifstream file(name); // read file
     if (!file.is_open()) {
         cerr << "Error opening file: " << name << "\n"; // in case it is not opened

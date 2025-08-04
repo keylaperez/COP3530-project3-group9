@@ -6,7 +6,6 @@
 #define COP3530_PROJECT3_GROUP9_MOVIEHASHMAP_H
 
 #include <iostream>
-#include <unordered_map>
 #include <vector>
 #include <string>
 #include <iostream>
@@ -28,15 +27,13 @@ private:
     void insert(const string& key, const vector<string>& value); //core insertion function
 
 public:
-    void titleSearch(string name);
-    void yearFilter(int year);
-    void genreFilter(string genre);
-    void ratingByGenre(string genre);
-    vector<string> splitGenre(string genre);
-    void parsingDataSet(string name);
     movieHashMap(int initialC = 10);
-    void insertMovie(string name, int year, string genre, int rating);
-    void ratingByRange(float minRating, float maxRating);
+    void titleSearch(string name); //searching by title
+    void yearFilter(int year);// filters through by year specified
+    void genreFilter(string genre); //searches through genre for specified
+    void parsingDataSet(string name); //used to parse in the data set
+    void insertMovie(string name, int year, string genre, int rating); //inserting movie helper
+    void ratingByRange(float minRating, float maxRating); //looking for movies within range specified
 };
 
 
