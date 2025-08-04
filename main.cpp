@@ -1,12 +1,10 @@
-//
-// Created by Keyla Perez on 8/2/25.
-//
 #include <iostream>
 #include <limits>
 #include <sstream>
 #include <string>
 #include <fstream>
 #include "movieHashMap.h"
+#include "movieTrie.h"
 
 using namespace std;
 
@@ -36,10 +34,14 @@ void mainMenu() {
 
 int main() {
 movieHashMap movieHashMap;
+MovieTrie myTrie;
 
     movieHashMap.insertMovie("Inception", 2010, "Sci-fi",      9);
     movieHashMap.insertMovie("Titanic", 1997, "Drama-Romance",  8);
     movieHashMap.insertMovie("Parastite", 2019, "Thriller-Drama",8);
+    myTrie.insertMovie("Inception", 2010, "Sci-fi",      9);
+    myTrie.insertMovie("Titanic", 1997, "Drama-Romance",  8);
+    myTrie.insertMovie("Parastite", 2019, "Thriller-Drama",8);
 
 
     int choice;
@@ -52,7 +54,10 @@ movieHashMap movieHashMap;
                 cout << "Enter Movie Title: ";
                 string title;
                 cin >> title;
+                cout << "Hash Map Results: " << endl;
                 movieHashMap.titleSearch(title);
+                cout << "Trie Results: " << endl;
+                myTrie.printTitles(title);
                 break;
             }
             case 2: {
@@ -60,14 +65,20 @@ movieHashMap movieHashMap;
                 int year;
                 cin >> year;
                 cin.ignore(numeric_limits<streamsize>::max(), '\n');
+                cout << "Hash Map Results: " << endl;
                 movieHashMap.yearFilter(year);
+                cout << "Trie Results: " << endl;
+                myTrie.printYear(year);
                 break;
             }
             case 3: {
                 cout << "Enter Movie Genre: ";
                 string genre;
                 cin >> genre;
+                cout << "Hash Map Results: " << endl;
                 movieHashMap.genreFilter(genre);
+                cout << "Trie Results: " << endl;
+                myTrie.printGenre(genre);
                 break;
             }
             case 5:

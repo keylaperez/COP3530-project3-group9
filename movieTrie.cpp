@@ -14,7 +14,8 @@ TrieNode::TrieNode() {
 MovieTrie::MovieTrie() {
     root = new TrieNode(); // new node for root
     movieCount = 0; // count initially 0
-    parseCSV("movies.csv");
+    movieList = new Movie[8000];
+    //parseCSV("movies.csv");
 }
 
 
@@ -29,13 +30,14 @@ static void deleteNode(TrieNode *node) {
 
 MovieTrie::~MovieTrie() {
     deleteNode(root);
+    delete[] movieList;
 }
 
 
-bool MovieTrie::insertMovie(const char *title, const char *genre, int year, float rating) {
+void MovieTrie::insertMovie(const char *title, int year, const char *genre, float rating) {
     if (movieCount >= 800000) {
         // 800,000 max movie count
-        return false; // unsuccessful
+        return; // unsuccessful
     }
 
 
@@ -64,7 +66,7 @@ bool MovieTrie::insertMovie(const char *title, const char *genre, int year, floa
 
 
     movieCount++; // amt of movies updated
-    return true; // successful!
+    //return; // successful!
 }
 
 
@@ -146,9 +148,9 @@ int MovieTrie::ratingsSearch(float minRating, float maxRating, Movie *results[],
 }
 
 
-void MovieTrie::printTitles(MovieTrie *trie, const string &title) {
+void MovieTrie::printTitles(const string &title) {
     // print movies with title
-    Movie *result = trie->titleSearch(title.c_str());
+    Movie *result = titleSearch(title.c_str());
     if (result) {
         printMovie(result);
     } else {
@@ -157,33 +159,33 @@ void MovieTrie::printTitles(MovieTrie *trie, const string &title) {
 }
 
 
-void MovieTrie::printGenre(MovieTrie *trie, const string &genre) {
+void MovieTrie::printGenre(const string &genre) {
     // print movies with genre
     Movie *results[100];
-    int found = trie->genreSearch(genre.c_str(), results, 100);
-    cout << "\nMovies with genre '" << genre << "': " << found << "\n";
+    int found = genreSearch(genre.c_str(), results, 100);
+    //cout << "\nMovies with genre '" << genre << "': " << found << "\n";
     for (int i = 0; i < found; ++i) {
         printMovie(results[i]);
     }
 }
 
 
-void MovieTrie::printYear(MovieTrie *trie, int year) {
+void MovieTrie::printYear(int year) {
     // print movies with year
     Movie *results[100];
-    int found = trie->yearSearch(year, results, 100);
-    cout << "\nMovies from year " << year << ": " << found << "\n";
+    int found = yearSearch(year, results, 100);
+    //cout << "\nMovies from year " << year << ": " << found << "\n";
     for (int i = 0; i < found; ++i) {
         printMovie(results[i]);
     }
 }
 
 
-void MovieTrie::printRatings(MovieTrie *trie, float lowerRate, float upperRate) {
+void MovieTrie::printRatings(float lowerRate, float upperRate) {
     // print movies with ratings
     Movie *results[100];
-    int found = trie->ratingsSearch(lowerRate, upperRate, results, 100);
-    cout << "\nMovies with ratings between " << lowerRate << " and " << upperRate << ": " << found << "\n";
+    int found = ratingsSearch(lowerRate, upperRate, results, 100);
+    //cout << "\nMovies with ratings between " << lowerRate << " and " << upperRate << ": " << found << "\n";
     for (int i = 0; i < found; ++i) {
         printMovie(results[i]);
     }
@@ -192,7 +194,7 @@ void MovieTrie::printRatings(MovieTrie *trie, float lowerRate, float upperRate) 
 
 void MovieTrie::printMovie(const Movie *m) {
     cout << "Title: " << m->title
-            << ", Genre: " << m->genre
-            << ", Year: " << m->year
-            << ", Rating: " << m->rating << "\n";
+            << "| Year: " << m->year
+            << "| Genre: " << m->genre
+            << "| Rating: " << m->rating << "\n";
 }

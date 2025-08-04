@@ -30,7 +30,7 @@ struct TrieNode {
 
 class MovieTrie {
     TrieNode *root; // each trie has a root node
-    Movie movieList[800000]; // an array with max 800,000 movies
+    Movie *movieList;
     int movieCount; // how many movies
 
     void collectAllFromNode(TrieNode *node, Movie *results[], int &count, int maxResults);
@@ -42,8 +42,8 @@ public:
     ~MovieTrie(); // destructor
 
     // inserts movies into trie structure
-    // initialize this, it is not called
-    bool insertMovie(const char *title, const char *genre, int year, float rating);
+    // initialize this, it is not called unless testinf
+    void insertMovie(const char *title, int year, const char *genre, float rating);
 
     void parseCVS(string &file);
 
@@ -57,13 +57,13 @@ public:
 
     int ratingsSearch(float minRating, float maxRating, Movie *results[], int maxResults);
 
-    void printTitles(MovieTrie *trie, const string &title);
+    void printTitles(const string &title);
 
-    void printGenre(MovieTrie *trie, const string &genre);
+    void printGenre(const string &genre);
 
-    void printYear(MovieTrie *trie, int year);
+    void printYear(int year);
 
-    void printRatings(MovieTrie *trie, float lowerRate, float upperRate);
+    void printRatings(float lowerRate, float upperRate);
 
     void printMovie(const Movie *m);
 };
