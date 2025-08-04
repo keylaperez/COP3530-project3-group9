@@ -28,7 +28,7 @@ void mainMenu() {
           " 1. Movie Title \n"
           " 2. Release Year \n"
           " 3. Movie Genre\n"
-          " 4. Ratings by Range (only Trie) \n"
+          " 4. Ratings by Range \n"
           " 5. EXIT \n"
           "\n Type your answer here: \n";
   }
@@ -127,6 +127,13 @@ MovieTrie myTrie;
                 cout << "Enter Higher Rating: (0.1-10)";
                 float highRate;
                 cin >> highRate;
+
+                clock_t start = clock();
+                cout << "Hash Map Results: " << endl;
+                movieHashMap.ratingByRange(lowerRate, highRate);
+                clock_t end = clock();
+                double elapsed = double(end - start) / CLOCKS_PER_SEC;
+                cout << "\nSearch took: " << elapsed << " seconds.\n\n";
 
                 clock_t startt = clock();
                 cout << "Trie Results (bonus function): " << endl;
