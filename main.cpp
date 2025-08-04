@@ -61,8 +61,12 @@ MovieTrie myTrie;
                 string title;
                 getline(cin, title);
 
+                clock_t start = clock();
                 cout << "Hash Map Results: " << endl;
                 movieHashMap.titleSearch(title);
+                clock_t end = clock();
+                double elapsed = double(end - start) / CLOCKS_PER_SEC;
+                cout << "Search took: " << elapsed << " seconds.\n";
 
                 clock_t start = clock();
                 cout << "Trie Results: " << endl;
