@@ -28,18 +28,19 @@ void mainMenu() {
           " 1. Movie Title \n"
           " 2. Release Year \n"
           " 3. Movie Genre\n"
-          " 4. Rating by Genre \n"
+          " 4. Ratings by Range (only Trie) \n"
           " 5. EXIT \n"
           "\n Type your answer here: \n";
   }
 
 int main() {
+    /*
     ifstream test("moviesDataset.csv");
     if (!test.is_open()) {
         cerr << "Couldn't find the file.\n";
     } else {
         cout << "File loaded successfully.\n";
-    }
+    }*/
 movieHashMap movieHashMap;
 MovieTrie myTrie;
 
@@ -49,6 +50,8 @@ MovieTrie myTrie;
     //movieHashMap.insertMovie("Titanic", 1997, "Drama-Romance",  8);
     //movieHashMap.insertMovie("Parastite", 2019, "Thriller-Drama",8);
 
+    myTrie.parseCSV("moviesDataset.csv");
+
 
     int choice;
     do {
@@ -57,7 +60,7 @@ MovieTrie myTrie;
 
         switch (choice) {
             case 1: {
-                cout << "Enter Movie Title: ";
+                cout << "Enter Movie Title (Exact title for Trie): ";
                 string title;
                 getline(cin, title);
 
@@ -66,14 +69,14 @@ MovieTrie myTrie;
                 movieHashMap.titleSearch(title);
                 clock_t end = clock();
                 double elapsed = double(end - start) / CLOCKS_PER_SEC;
-                cout << "Search took: " << elapsed << " seconds.\n";
+                cout << "\nSearch took: " << elapsed << " seconds.\n\n";
 
                 clock_t startt = clock();
                 cout << "Trie Results: " << endl;
                 myTrie.printTitles(title);
                 clock_t endt = clock();
                 double elapsedt = double(endt - startt) / CLOCKS_PER_SEC;
-                cout << "Search took: " << elapsedt << " seconds.\n";
+                cout << "\nSearch took: " << elapsedt << " seconds.\n";
                 break;
             }
             case 2: {
@@ -86,14 +89,14 @@ MovieTrie myTrie;
                 movieHashMap.yearFilter(year);
                 clock_t end = clock();
                 double elapsed = double(end - start) / CLOCKS_PER_SEC;
-                cout << "Search took: " << elapsed << " seconds.\n";
+                cout << "\nSearch took: " << elapsed << " seconds.\n\n";
 
                 clock_t startt = clock();
                 cout << "Trie Results: " << endl;
                 myTrie.printYear(year);
                 clock_t endt = clock();
                 double elapsedt = double(endt - startt) / CLOCKS_PER_SEC;
-                cout << "Search took: " << elapsedt << " seconds.\n";
+                cout << "\nSearch took: " << elapsedt << " seconds.\n";
                 break;
             }
             case 3: {
@@ -106,31 +109,31 @@ MovieTrie myTrie;
                 movieHashMap.genreFilter(genre);
                 clock_t end = clock();
                 double elapsed = double(end - start) / CLOCKS_PER_SEC;
-                cout << "Search took: " << elapsed << " seconds.\n";
+                cout << "\nSearch took: " << elapsed << " seconds.\n\n";
 
                 clock_t startt = clock();
                 cout << "Trie Results: " << endl;
                 myTrie.printGenre(genre);
                 clock_t endt = clock();
                 double elapsedt = double(endt - startt) / CLOCKS_PER_SEC;
-                cout << "Search took: " << elapsedt << " seconds.\n";
+                cout << "\nSearch took: " << elapsedt << " seconds.\n";
                 break;
             }
             case 4: {
-                cout << "Enter Lower Rating: ";
+                cout << "Enter Lower Rating (0-9.9): ";
                 float lowerRate;
                 cin >> lowerRate;
 
-                cout << "Enter Higher Rating: ";
+                cout << "Enter Higher Rating: (0.1-10)";
                 float highRate;
                 cin >> highRate;
 
                 clock_t startt = clock();
-                cout << "Trie Results: " << endl;
+                cout << "Trie Results (bonus function): " << endl;
                 myTrie.printRatings(lowerRate, highRate);
                 clock_t endt = clock();
                 double elapsedt = double(endt - startt) / CLOCKS_PER_SEC;
-                cout << "Search took: " << elapsedt << " seconds.\n";
+                cout << "\nSearch took: " << elapsedt << " seconds.\n";
                 break;
             }
             case 5:

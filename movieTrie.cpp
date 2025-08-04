@@ -21,7 +21,7 @@ MovieTrie::MovieTrie() {
     rootRating = new TrieNode();
     movieCount = 0; // count initially 0
     movieList = new Movie[8000]; // 8000 for storage purposes
-    parseCSV("movies.csv"); // add everything into this trie
+    //parseCSV("movies.csv"); // add everything into this trie
 }
 
 MovieTrie::~MovieTrie() {
@@ -293,7 +293,7 @@ void MovieTrie::printRatings(float lowerRate, float upperRate) {
 
 void MovieTrie::printMovie(const Movie *mov) {
     cout << "Title: " << mov->title
-            << "| Year: " << mov->year
-            << "| Genre: " << mov->genre
-            << "| Rating: " << mov->rating << "\n";
+            << " | Year: " << mov->year
+            << " | Rating: " << mov->rating
+            << " | Genre(s): " << mov->genre << "\n";
 }
