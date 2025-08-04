@@ -68,12 +68,12 @@ MovieTrie myTrie;
                 double elapsed = double(end - start) / CLOCKS_PER_SEC;
                 cout << "Search took: " << elapsed << " seconds.\n";
 
-                clock_t start = clock();
+                clock_t startt = clock();
                 cout << "Trie Results: " << endl;
                 myTrie.printTitles(title);
-                clock_t end = clock();
-                double elapsed = double(end - start) / CLOCKS_PER_SEC;
-                cout << "Search took: " << elapsed << " seconds.\n";
+                clock_t endt = clock();
+                double elapsedt = double(endt - startt) / CLOCKS_PER_SEC;
+                cout << "Search took: " << elapsedt << " seconds.\n";
                 break;
             }
             case 2: {
