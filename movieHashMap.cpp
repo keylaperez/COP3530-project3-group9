@@ -4,11 +4,8 @@
 
 #include "movieHashMap.h"
 
-movieHashMap::movieHashMap(int initialC) : size(0), capacity(initialC) {
-    movies.resize(capacity);
-}
 
-int movieHashMap::hash(const string& key) const {
+int movieHashMap::hash(const string& key) const { //hashing to return where the movie should be
     int h = 0;
     for (char c : key) {
         h = h*31 + c;
@@ -16,25 +13,29 @@ int movieHashMap::hash(const string& key) const {
     return (h % capacity + capacity) % capacity;
 }
 
-void movieHashMap::insert(const string& key, const vector<string>& value) { //inserting
+movieHashMap::movieHashMap(int initialC) : size(0), capacity(initialC) { //constructor for our structure initalizing it
+    movies.resize(capacity);
+}
+
+void movieHashMap::insert(const string& key, const vector<string>& value) { //inserting core
     int index = hash(key);
     movies[index].push_back({key, value});
     size++;
 
-    if (size > capacity * 0.75) {
+    if (size > capacity * 0.75) { //if capacity is at 75% then we gotta resize
         capacity *= 2;
-        vector<vector<pair<string, vector<string>>>> newBuckets(capacity);
+        vector<vector<pair<string, vector<string>>>> newBuckets(capacity); //putting in new bucket
         for (auto& bucket : movies) {
             for (auto& p : bucket) {
                 int newIndex = hash(p.first);
                 newBuckets[newIndex].push_back(p);
             }
         }
-        movies = move(newBuckets);
+        movies = move(newBuckets); //changing buckets
     }
 }
 
-void movieHashMap::insertMovie(string name, int year, string genre, int rating) {
+void movieHashMap::insertMovie(string name, int year, string genre, int rating) { //helperInsert from outside with the variables
     vector<string> info = {to_string(year), to_string(rating), genre};
     insert(name, info);
 }
@@ -56,14 +57,14 @@ void movieHashMap::genreFilter(std::string genre) { //genre filter, looping thro
 
             string currentGenre = info[2];
 
-            if (currentGenre.find(genre) != string::npos) {
+            if (currentGenre.find(genre) != string::npos) { //if the genre is found then we print it
                 cout << "Title: " << title;
                 cout << " | Year: " << info[0];
                 cout << " | Rating: " << info[1];
                 cout << " | Genre(s): " << info[2] << endl;
 
                 count++;
-                if (count == 10) {
+                if (count == 10) { //for counter if results over 10 then we stop because too much data
                     return;
                 }
             }
@@ -73,8 +74,9 @@ void movieHashMap::genreFilter(std::string genre) { //genre filter, looping thro
 
 }
 
-void movieHashMap::ratingByRange(float minRating, float maxRating) {
-    vector<pair<string, vector<string>>> matchingMovies;
+void movieHashMap::ratingByRange(float minRating, float maxRating) { //between two ratings print the first ten movies
+
+    vector<pair<string, vector<string>>> matchingMovies; // loop of matching movies
 
     for (const auto& bucket : movies) {
         for (const auto& pair : bucket) {
@@ -83,7 +85,7 @@ void movieHashMap::ratingByRange(float minRating, float maxRating) {
 
             float currentRating = stof(info[1]);
 
-            if (currentRating >= minRating && currentRating <= maxRating) {
+            if (currentRating >= minRating && currentRating <= maxRating) { //putting in the loop
                 matchingMovies.push_back({title, info});
             }
         }
@@ -95,14 +97,14 @@ void movieHashMap::ratingByRange(float minRating, float maxRating) {
     }
     int count = 0;
 
-    for (const auto& movie : matchingMovies) {
+    for (const auto& movie : matchingMovies) { //looping through the first ten movies that match the rating
         cout << "Title: " << movie.first;
         cout << " | Year: " << movie.second[0];
         cout << " | Rating: " << movie.second[1];
         cout << " | Genre(s): " << movie.second[2] << endl;
 
         count++;
-        if (count == 10) {
+        if (count == 10) { //for counter if results over 10 then we stop because too much data
             return;
         }
     }
@@ -125,7 +127,7 @@ void movieHashMap::titleSearch(std::string name) {
                 cout << " | Genre(s): " << info[2] << endl;
 
                 count++;
-                if (count == 10) {
+                if (count == 10) { //for counter if results over 10 then we stop because too much data
                     return;
                 }
 
@@ -210,7 +212,7 @@ void movieHashMap::yearFilter(int year) { //filter by year
                 cout << " | Genre(s): " << info[2] << endl;
 
                 count++;
-                if (count == 10) {
+                if (count == 10) { //for counter if results over 10 then we stop because too much data
                     return;
                 }
 
