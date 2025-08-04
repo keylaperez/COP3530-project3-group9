@@ -3,6 +3,9 @@
 //
 #include <iostream>
 #include <limits>
+#include <sstream>
+#include <string>
+#include <fstream>
 #include "movieHashMap.h"
 
 using namespace std;
@@ -33,6 +36,28 @@ void mainMenu() {
 
 int main() {
 movieHashMap movieHashMap;
+
+    ifstream in("resources/movieHashMap.txt");
+
+    string line;
+    getline(in, line);
+
+    while (getline(in, line)) {
+        istringstream iss(line);
+        string title, year, yearGenre, rating, genre;
+
+        getline(iss, title, ',');
+        getline(iss, year, ',');
+        getline(iss, yearGenre, ',');
+        getline(iss, rating, ',');
+
+        int year = stoi(year);
+        int rate = stoi(rating);
+
+        movieHashMap.insertMovie(title, year, yearGenre, rate);
+    }
+
+    in.close();
 
     movieHashMap.insertMovie("Inception", 2010, "Sci-fi",      9);
     movieHashMap.insertMovie("Titanic", 1997, "Drama-Romance",  8);
