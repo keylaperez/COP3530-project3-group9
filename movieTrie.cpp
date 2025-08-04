@@ -262,7 +262,7 @@ void MovieTrie::printGenre(const string &genre) {
     Movie *results[100];
     int found = genreSearch(genre.c_str(), results, 100);
     //cout << "\nMovies with genre '" << genre << "': " << found << "\n";
-    for (int i = 0; i < found; ++i) {
+    for (int i = 0; i < found && i < 10; ++i) {
         printMovie(results[i]);
     }
 }
@@ -273,7 +273,7 @@ void MovieTrie::printYear(int year) {
     Movie *results[100];
     int found = yearSearch(year, results, 100);
     //cout << "\nMovies from year " << year << ": " << found << "\n";
-    for (int i = 0; i < found; ++i) {
+    for (int i = 0; i < found && i < 10; ++i) {
         printMovie(results[i]);
     }
 }
@@ -284,7 +284,7 @@ void MovieTrie::printRatings(float lowerRate, float upperRate) {
     Movie *results[100];
     int found = ratingsSearch(lowerRate, upperRate, results, 100);
     //cout << "\nMovies with ratings between " << lowerRate << " and " << upperRate << ": " << found << "\n";
-    for (int i = 0; i < found; ++i) {
+    for (int i = 0; i < found && i < 10; ++i) {
         printMovie(results[i]);
     }
 }

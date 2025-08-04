@@ -114,6 +114,23 @@ MovieTrie myTrie;
                 cout << "Search took: " << elapsedt << " seconds.\n";
                 break;
             }
+            case 4: {
+                cout << "Enter Lower Rating: ";
+                float lowerRate;
+                cin >> lowerRate;
+
+                cout << "Enter Higher Rating: ";
+                float highRate;
+                cin >> highRate;
+
+                clock_t startt = clock();
+                cout << "Trie Results: " << endl;
+                myTrie.printRatings(lowerRate, highRate);
+                clock_t endt = clock();
+                double elapsedt = double(endt - startt) / CLOCKS_PER_SEC;
+                cout << "Search took: " << elapsedt << " seconds.\n";
+                break;
+            }
             case 5:
                 cout <<"Good Bye!";
                 break;
