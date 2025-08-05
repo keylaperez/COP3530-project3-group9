@@ -34,19 +34,16 @@ void mainMenu() {
   }
 
 int main() {
-    /*
-    ifstream test("moviesDataset.csv");
-    if (!test.is_open()) {
-        cerr << "Couldn't find the file.\n";
-    } else {
-        cout << "File loaded successfully.\n";
-    }*/
+
 movieHashMap movieHashMap;
 MovieTrie myTrie;
 
     movieHashMap.parsingDataSet("moviesDataset.csv");
     myTrie.parseCSV("moviesDataset.csv");
 
+    cout << "By: The Popcorn Programmers" << endl;
+    cout << "Credits: Keyla Perez, Zi Xuan Weng, Sydney Fung" << endl;
+    cout << endl;
 
     int choice;
     do {
