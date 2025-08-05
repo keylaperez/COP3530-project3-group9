@@ -1,0 +1,20 @@
+Instructions for Movie Recommender!!
+
+This application will run completely on the terminal. 
+Don’t know what movie to watch look no further with our movie recommender brought to you by the Popcorn Programmers! 
+
+Run our project and our easy interface will guide you to your perfect movie for a night in!
+
+Through our movie recommender, you have the following menu options: 
+search by movie title, release year, or movie genre. We also have an option to choose the range of ratings based on input, and it will release random movies within that spectrum. 
+
+Once you find your perfect movie you can exit and enjoy with some popcorn! 
+
+
+
+Instructions to work the program…
+
+This is just a command line user interface. 
+Select an option from our menu and put in the corresponding valid input and BOOM movie suggestions galore. 
+This will not only give you recommendation this can lead you to the movie you will tell your grandkids about. 
+Bring the family together with our movie recommender! Enjoy and please use responsibly :)) 
