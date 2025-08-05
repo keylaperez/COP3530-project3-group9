@@ -72,7 +72,7 @@ public:
     // prints movies based on year trie
     void printYear(int year);
 
-    // prints movies based on ratings trie
+    // prints movies based on movies array
     void printRatings(float lowerRate, float upperRate);
 
     // prints movies
