@@ -115,7 +115,7 @@ MovieTrie myTrie;
                 float lowerRate;
                 cin >> lowerRate; //gets the lower range for rating
 
-                cout << "Enter Higher Rating: (0.1-10)";
+                cout << "Enter Higher Rating (0.1-10): ";
                 float highRate;
                 cin >> highRate; //gets the higher range for rating
 
