@@ -291,7 +291,7 @@ void MovieTrie::printRatings(float lowerRate, float upperRate) {
     }
 }
 
-void MovieTrie::printMovie(const Movie *mov) {
+void MovieTrie::printMovie(const Movie *mov) { //for cout and printing movie consistently
     cout << "Title: " << mov->title
             << " | Year: " << mov->year
             << " | Rating: " << mov->rating
